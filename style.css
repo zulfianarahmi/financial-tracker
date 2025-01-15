@@ -152,6 +152,69 @@ h2 {
   border-radius: 10px;
 }
 
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f7f8fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+header {
+  background-color: #4caf50;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5rem;
+}
+
+.about-section {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-content {
+  margin-bottom: 30px;
+}
+
+.about-content h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.about-content p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+footer {
+  text-align: center;
+  background-color: #4caf50;
+  color: white;
+  padding: 1.5rem;
+  margin-top: 40px;
+  font-size: 1rem;
+}
+
+footer p {
+  margin: 0;
+}
+
 /* ===== Contact Us Section ===== */
 .contact-us {
   background-color: #f4faf8;
