@@ -12,7 +12,7 @@ h2 {
 
 /* ===== Hero Section ===== */
 .hero {
-  /* background-image: url("/assets/images/hero.jpg");*/
+  background-image: url("C:\BELAJAR\2025\devops\financial-tracker\public\hero.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -34,6 +34,7 @@ h2 {
 }
 .hero nav ul li {
   margin: 0 15px;
+  font-size: 120%;
 }
 .hero nav ul li a {
   text-decoration: none;
@@ -44,17 +45,18 @@ h2 {
   background-color: #4caf50;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 20px 70px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: medium;
 }
 .hero-content h2 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin: 20px 0;
-}
-.hero-content p {
-  font-size: 1rem;
-  color: #666;
+  display: flex;
+  justify-content: center; /* Tengah secara horizontal */
+  align-items: center; /* Tengah secara vertikal */
+  height: 50vh;
 }
 .hero-content .read-more {
   background-color: #f04e30;

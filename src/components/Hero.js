@@ -20,11 +20,6 @@ const Hero = () => {
       </nav>
       <div className="hero-content">
         <h2>Membuat pendisiplinan keuanganmu</h2>
-        <p>
-          Finally, the all-in-one practice management tool you've been looking
-          for
-        </p>
-        <button className="read-more">Read More</button>
       </div>
     </header>
   );

@@ -8,11 +8,7 @@ const Features = () => {
       <div className="features-container">
         {/* Card 1 */}
         <div className="feature-card">
-          <img
-            src="img\money.png"
-            alt="Feature Icon 1"
-            className="feature-icon"
-          />
+          <img src="/money.png" alt="Feature Icon 1" className="feature-icon" />
           <h3 className="feature-title">Pencatatan Transaksi Harian</h3>
           <p className="feature-description">
             Catat pemasukan dan pengeluaran dengan mudah, termasuk tanggal,
@@ -21,11 +17,7 @@ const Features = () => {
         </div>
         {/* Card 2 */}
         <div className="feature-card">
-          <img
-            src="img\hand.png"
-            alt="Feature Icon 2"
-            className="feature-icon"
-          />
+          <img src="/hand.png" alt="Feature Icon 2" className="feature-icon" />
           <h3 className="feature-title">Analisis Mingguan & Bulanan</h3>
           <p className="feature-description">
             Tampilkan dan filter transaksi berdasarkan minggu atau bulan untuk
@@ -34,11 +26,7 @@ const Features = () => {
         </div>
         {/* Card 3 */}
         <div className="feature-card">
-          <img
-            src="img/hand2.png"
-            alt="Feature Icon 3"
-            className="feature-icon"
-          />
+          <img src="/hand2.png" alt="Feature Icon 3" className="feature-icon" />
           <h3 className="feature-title">Kategori & Total Pengeluaran</h3>
           <p className="feature-description">
             Kelompokkan transaksi berdasarkan kategori untuk melihat total
