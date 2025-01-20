@@ -4,7 +4,6 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
-import { height } from "@mui/system";
 
 const cards = [
   {
@@ -33,47 +32,48 @@ function FinancialTracker() {
     <Box
       sx={{
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
+        justifyContent: "flex-start", // Membawa konten ke bagian atas
         alignItems: "center",
         minHeight: "100vh",
-        padding: 2,
-        gridTemplateColumns: "repeat(auto-fill, minmax(min(200px, 100%), 1fr))",
+        paddingTop: "10vh", // Geser grid ke bawah sedikit dari atas
+        paddingBottom: "20vh", // Tambahkan ruang untuk perhitungan di bawah
         gap: 2,
       }}
     >
+      {/* Card Section */}
       <Box
         sx={{
-          width: "100%", // Untuk mengambil lebar penuh
-          maxWidth: 1200, // Membatasi lebar maksimum
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fill, minmax(min(200px, 100%), 1fr))",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexWrap: "wrap",
           gap: 2,
+          width: "100%",
+          maxWidth: 1200,
         }}
       >
         {cards.map((card, index) => (
-          <Card>
+          <Card key={card.id} sx={{ width: 300 }}>
             <CardActionArea
               onClick={() => setSelectedCard(index)}
-              data-active={selectedCard === index ? "" : "undifined"}
               sx={{
                 height: "100%",
-                "&[data-active]": {
+                "&:hover": {
                   backgroundColor: "action.selected",
-                  "&:hover": {
-                    backgroundColor: "action.selectedHover",
-                  },
                 },
+                backgroundColor:
+                  selectedCard === index ? "action.selected" : "inherit",
               }}
             >
-              <cardContent sx={{ height: "100%" }}>
+              <CardContent sx={{ height: "100%" }}>
                 <Typography variant="h5" component="div">
                   {card.title}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2" color="text.secondary">
                   {card.description}
                 </Typography>
-              </cardContent>
+              </CardContent>
             </CardActionArea>
           </Card>
         ))}
