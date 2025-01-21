@@ -23,27 +23,9 @@ import { AccessTime, PieChart, Folder } from "@mui/icons-material";
 import "./FeaturesPage.css";
 
 const cards = [
-  {
-    id: 1,
-    title: "Transaksi Harian",
-    description:
-      "Catat pemasukan dan pengeluaran dengan mudah, termasuk tanggal, jumlah, dan kategori.",
-    icon: <AccessTime />,
-  },
-  {
-    id: 2,
-    title: "Analisis Mingguan & Bulanan",
-    description:
-      "Tampilkan dan filter transaksi berdasarkan minggu atau bulan untuk memahami pola pengeluaran/pemasukan.",
-    icon: <PieChart />,
-  },
-  {
-    id: 3,
-    title: "Kategori & Total Pengeluaran",
-    description:
-      "Kelompokkan transaksi berdasarkan kategori untuk melihat total pengeluaran atau pemasukan per kategori dengan cepat.",
-    icon: <Folder />,
-  },
+  { id: 1, title: "Transaksi Harian", icon: <AccessTime /> },
+  { id: 2, title: "Analisis Mingguan & Bulanan", icon: <PieChart /> },
+  { id: 3, title: "Kategori & Total Pengeluaran", icon: <Folder /> },
 ];
 
 function FinancialTracker() {
@@ -54,53 +36,67 @@ function FinancialTracker() {
     category: "",
     label: "",
   });
-  const [transactions, setTransactions] = React.useState([]); // Array untuk menyimpan semua transaksi
+  const [transactions, setTransactions] = React.useState([]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e) =>
     setTransaction({ ...transaction, [e.target.name]: e.target.value });
-  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setTransactions([...transactions, transaction]); // Tambahkan transaksi baru ke dalam array
-    setTransaction({ date: "", amount: "", category: "", label: "" }); // Reset form
+    setTransactions([...transactions, transaction]);
+    setTransaction({ date: "", amount: "", category: "", label: "" });
   };
 
+  // Filter berdasarkan bulan
+  const getMonthlyTransactions = () => {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    return transactions.filter((t) => {
+      const date = new Date(t.date);
+      return (
+        date.getFullYear() === currentYear && date.getMonth() === currentMonth
+      );
+    });
+  };
+
+  // Komponen Tabel Reusable
+  const TransactionTable = ({ title, data }) => (
+    <TableContainer component={Paper} sx={{ marginTop: 4 }}>
+      <Typography variant="h6" gutterBottom>
+        {title}
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">Tanggal</TableCell>
+            <TableCell align="center">Jumlah</TableCell>
+            <TableCell align="center">Kategori</TableCell>
+            <TableCell align="center">Label</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((t, index) => (
+            <TableRow key={index}>
+              <TableCell align="center">{t.date}</TableCell>
+              <TableCell align="center">{t.amount}</TableCell>
+              <TableCell align="center">{t.category}</TableCell>
+              <TableCell align="center">{t.label}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        minHeight: "100vh",
-        paddingTop: "10vh",
-        paddingBottom: "20vh",
-        gap: 2,
-      }}
-    >
-      {/* Card Section */}
-      <Box
-        className="page-background"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: 2,
-          width: "100%",
-          maxWidth: 1200,
-        }}
-      >
+    <Box sx={{ padding: 2, minHeight: "100vh" }}>
+      {/* Section Kartu */}
+      <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
         {cards.map((card, index) => (
-          <Card key={card.id} sx={{ width: 300 }} className="card">
+          <Card key={card.id} sx={{ width: 300 }}>
             <CardActionArea
               onClick={() => setSelectedCard(index)}
               sx={{
-                height: "100%",
-                "&:hover": {
-                  backgroundColor: "action.selected",
-                },
                 backgroundColor:
                   selectedCard === index ? "action.selected" : "inherit",
               }}
@@ -114,43 +110,22 @@ function FinancialTracker() {
                   {card.icon}
                   {card.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {card.description}
-                </Typography>
               </CardContent>
             </CardActionArea>
           </Card>
         ))}
       </Box>
 
-      {/* Input Transaksi Section */}
-      <Box
-        className="page-background"
-        component="form"
-        onSubmit={handleFormSubmit}
-        sx={{
-          width: "100%",
-          maxWidth: 1200,
-          marginTop: 4,
-          padding: 2,
-          backgroundColor: "#f9f9f9",
-          borderRadius: 2,
-          boxShadow: 1,
-        }}
-      >
-        <Typography variant="h6" component="div" gutterBottom>
-          Masukkan Transaksi
-        </Typography>
+      {/* Form Input */}
+      <Box component="form" onSubmit={handleFormSubmit} sx={{ marginTop: 4 }}>
         <TextField
           label="Tanggal"
           type="date"
           name="date"
           value={transaction.date}
           onChange={handleInputChange}
-          sx={{ width: "100%", marginBottom: 2 }}
-          InputLabelProps={{
-            shrink: true,
-          }}
+          sx={{ marginBottom: 2, width: "100%" }}
+          InputLabelProps={{ shrink: true }}
         />
         <TextField
           label="Jumlah"
@@ -158,7 +133,7 @@ function FinancialTracker() {
           name="amount"
           value={transaction.amount}
           onChange={handleInputChange}
-          sx={{ width: "100%", marginBottom: 2 }}
+          sx={{ marginBottom: 2, width: "100%" }}
         />
         <FormControl fullWidth sx={{ marginBottom: 2 }}>
           <InputLabel>Kategori</InputLabel>
@@ -166,7 +141,6 @@ function FinancialTracker() {
             name="category"
             value={transaction.category}
             onChange={handleInputChange}
-            label="Kategori"
           >
             <MenuItem value="Makanan">Makanan</MenuItem>
             <MenuItem value="Transportasi">Transportasi</MenuItem>
@@ -179,43 +153,21 @@ function FinancialTracker() {
             name="label"
             value={transaction.label}
             onChange={handleInputChange}
-            label="Label"
           >
             <MenuItem value="Primer">Kebutuhan Primer</MenuItem>
-            <MenuItem value="Sekunder">Sekunder</MenuItem>
+            <MenuItem value="Sekunder">Kebutuhan Sekunder</MenuItem>
           </Select>
         </FormControl>
-        <Button type="submit" variant="contained" color="primary" fullWidth>
+        <Button type="submit" variant="contained" fullWidth>
           Simpan Transaksi
         </Button>
       </Box>
 
-      {/* Tabel Data Transaksi */}
-      <TableContainer
-        component={Paper}
-        sx={{ width: "100%", maxWidth: 1200, marginTop: 4 }}
-      >
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Tanggal</TableCell>
-              <TableCell align="center">Jumlah</TableCell>
-              <TableCell align="center">Kategori</TableCell>
-              <TableCell align="center">Label</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {transactions.map((t, index) => (
-              <TableRow key={index}>
-                <TableCell align="center">{t.date}</TableCell>
-                <TableCell align="center">{t.amount}</TableCell>
-                <TableCell align="center">{t.category}</TableCell>
-                <TableCell align="center">{t.label}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {/* Tabel Semua Transaksi */}
+      <TransactionTable
+        title="Transaksi Bulanan"
+        data={getMonthlyTransactions()}
+      />
     </Box>
   );
 }
