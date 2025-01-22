@@ -32,19 +32,57 @@ function FinancialTracker() {
   const [filteredTransactions, setFilteredTransactions] = React.useState([]);
   const [total, setTotal] = React.useState(0);
 
+  // Ambil semua transaksi dari backend saat aplikasi dimulai
+  React.useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/transactions");
+        const data = await response.json();
+        setTransactions(data);
+        setFilteredTransactions(data);
+        const totalAmount = data.reduce((sum, t) => sum + t.amount, 0);
+        setTotal(totalAmount);
+      } catch (error) {
+        console.error("Gagal mengambil transaksi:", error.message);
+      }
+    };
+    fetchTransactions();
+  }, []);
+
   // Handle input untuk transaksi baru
   const handleInputChange = (e) => {
     setTransaction({ ...transaction, [e.target.name]: e.target.value });
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const newTransaction = {
       ...transaction,
       amount: parseFloat(transaction.amount),
     };
-    setTransactions([...transactions, newTransaction]);
-    setTransaction({ date: "", amount: "", category: "", label: "" });
+
+    try {
+      const response = await fetch("http://localhost:5000/api/transactions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newTransaction),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log("Transaksi berhasil ditambahkan:", result.transaction);
+
+      setTransactions((prev) => [...prev, result.transaction]);
+      setFilteredTransactions((prev) => [...prev, result.transaction]);
+      setTotal((prev) => prev + result.transaction.amount);
+
+      setTransaction({ date: "", amount: "", category: "", label: "" });
+    } catch (error) {
+      console.error("Error saat menambahkan transaksi:", error.message);
+    }
   };
 
   // Handle input untuk filter
@@ -74,12 +112,6 @@ function FinancialTracker() {
     const totalAmount = transactions.reduce((sum, t) => sum + t.amount, 0);
     setTotal(totalAmount);
   };
-
-  React.useEffect(() => {
-    setFilteredTransactions(transactions);
-    const totalAmount = transactions.reduce((sum, t) => sum + t.amount, 0);
-    setTotal(totalAmount);
-  }, [transactions]);
 
   return (
     <Box sx={{ padding: 4, maxWidth: 800, margin: "0 auto" }}>

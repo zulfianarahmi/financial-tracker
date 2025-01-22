@@ -1,32 +1,31 @@
 const express = require("express");
 const cors = require("cors");
+
 const app = express();
+const PORT = 5000;
 
-app.use(cors()); // Supaya frontend bisa akses backend
-app.use(express.json()); // Parsing JSON body
+app.use(cors());
+app.use(express.json());
 
-let transactions = []; // Penyimpanan data sementara
+const transactions = [];
 
-// Endpoint POST untuk menambahkan transaksi baru
+// Ambil semua transaksi
+app.get("/api/transactions", (req, res) => {
+  res.json(transactions);
+});
+
+// Tambahkan transaksi baru
 app.post("/api/transactions", (req, res) => {
-  const { tanggal, jumlah, kategori, label } = req.body;
-  const newTransaction = { id: Date.now(), tanggal, jumlah, kategori, label };
+  const newTransaction = { id: Date.now(), ...req.body };
   transactions.push(newTransaction);
   res
     .status(201)
     .json({
       message: "Transaksi berhasil ditambahkan!",
-      transaksi: newTransaction,
+      transaction: newTransaction,
     });
 });
 
-// Endpoint GET untuk mengambil semua transaksi
-app.get("/api/transactions", (req, res) => {
-  res.json(transactions);
+app.listen(PORT, () => {
+  console.log(`Server berjalan di http://localhost:${PORT}`);
 });
-
-// Jalankan server
-const PORT = 5000;
-app.listen(PORT, () =>
-  console.log(`Server berjalan di http://localhost:${PORT}`)
-);
