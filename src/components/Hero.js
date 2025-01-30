@@ -16,7 +16,6 @@ const Hero = () => {
             <a href="#contact">Contact</a>
           </li>
         </ul>
-        <button className="login-btn">Login</button>
       </nav>
       <div className="hero-content">
         <h2>Membuat pendisiplinan keuanganmu</h2>
