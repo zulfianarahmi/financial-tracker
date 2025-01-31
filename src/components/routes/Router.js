@@ -7,9 +7,8 @@ function AppRouter() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} /> {/* Halaman utama */}
+        <Route path="/" element={<Home />} />
         <Route path="/tracker" element={<FinancialTracker />} />{" "}
-        {/* Halaman fitur */}
       </Routes>
     </Router>
   );

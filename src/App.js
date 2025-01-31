@@ -12,9 +12,7 @@ function App() {
   return (
     <Router>
       {" "}
-      {/* Pastikan Router dibungkus di sini */}
       <Routes>
-        {/* Rute untuk halaman utama */}
         <Route
           path="/"
           element={
@@ -28,7 +26,6 @@ function App() {
           }
         />
 
-        {/* Rute untuk halaman FinancialTracker */}
         <Route path="/tracker" element={<FinancialTracker />} />
       </Routes>
     </Router>
