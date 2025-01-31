@@ -1,11 +1,11 @@
 const mysql = require("mysql2");
 
 const connection = mysql.createConnection({
-  host: "junction.proxy.rlwy.net", // Host dari Railway
-  user: "root", // User dari Railway
-  password: "FMxAPzIeNLXFBEQLuQjIzhEAFaZpfqKy", // Password dari Railway
-  database: "railway", // Nama database
-  port: 39847, // Port dari Railway
+  host: "junction.proxy.rlwy.net", // Ganti dengan host dari Railway
+  user: "root", // Ganti dengan user dari Railway
+  password: "FMxAPzIeNLXFBEQLuQjIzhEAFaZpfqKy", // Ganti dengan password dari Railway
+  database: "railway", // Ganti dengan database dari Railway
+  port: 39847, // Ganti dengan port dari Railway
 });
 
 connection.connect((err) => {
