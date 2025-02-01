@@ -36,7 +36,7 @@ function FinancialTracker() {
   React.useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/transactions");
+        const response = await fetch("http://localhost:3001/api/transactions");
         const data = await response.json();
         setTransactions(data);
         setFilteredTransactions(data);
